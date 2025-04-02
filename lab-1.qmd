@@ -1,11 +1,12 @@
 ---
 title: "Lab 1 - Quarto Warmup & STAT 331 Review"
-author: "YOUR NAME HERE"
+author: "Visruth"
 format: html
 embed-resources: true
 editor: source
 execute: 
   echo: true
+warning: false
 ---
 
 ```{r}
@@ -20,13 +21,15 @@ library(ggridges)
 First, let's make sure you know how to use Markdown formatting to style a Quarto
 document.
 
-1.  Make this text bold.
+1.  **Make this text bold.**
 
-2.  Make this text italicized.
+2.  *Make this text italicized*.
 
 3.  Make these into a bullet point list:
 
-Apples Bananas Potatoes
+* Apples 
+* Bananas
+* Potatoes
 
 4.  Edit the YAML to remove warning messages from being output in the rendered
 HTML file
@@ -34,63 +37,67 @@ HTML file
 5.  Using code chunk options, make it so this chunk shows the plot but not the
 source code:
 
-```{r}
-ggplot(data = mpg, 
-       mapping = aes(y = manufacturer, x = hwy)) + 
+```{r mpg boxplots}
+#| echo: false
+ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_boxplot() +
-  labs(x = "",
-       y = "", 
-       title = "Highway Milage (mpg) for Different Car Manufacturers"
-       )
+  labs(
+    x = "",
+    y = "",
+    title = "Highway Milage (mpg) for Different Car Manufacturers"
+  )
 ```
 
 6.  Using code chunk options, remove the messages about bandwidth
 `geom_density_ridges()` chose to use:
 
-```{r}
-ggplot(data = mpg, 
-       mapping = aes(y = manufacturer, x = hwy)) + 
+```{r mpg density ridges}
+#| warning: false
+ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_density_ridges() +
-  labs(x = "",
-       y = "", 
-       title = "Highway Milage (mpg) for Different Car Manufacturers"
-       )
+  labs(
+    x = "",
+    y = "",
+    title = "Highway Milage (mpg) for Different Car Manufacturers"
+  )
 ```
 
 7.  Using code chunk options, make it so that these plots are printed
 side-by-side:
 
-```{r}
-
-ggplot(data = mpg, 
-       mapping = aes(y = manufacturer, x = hwy)) + 
+```{r side by side plots}
+#| layout-ncol: 2
+ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_boxplot() +
-  labs(x = "",
-       y = "", 
-       title = "Highway Milage (mpg) for Different Car Manufacturers"
-       )
+  labs(
+    x = "",
+    y = "",
+    title = "Highway Milage (mpg) for Different Car Manufacturers"
+  )
 
-ggplot(data = mpg, 
-       mapping = aes(y = manufacturer, x = hwy)) + 
+ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_density_ridges() +
-  labs(x = "",
-       y = "", 
-       title = "Highway Milage (mpg) for Different Car Manufacturers"
-       )
+  labs(
+    x = "",
+    y = "",
+    title = "Highway Milage (mpg) for Different Car Manufacturers"
+  )
 
 ```
 
 8.  Using code chunk options, make it so this chunk shows the code but not the
 output:
 
-```{r}
+```{r addition}
+#| execute: false
 2 + 2
 ```
 
 9.  Using code chunk options, make it so the file can still knit even though
 this chunk has an error
 
-```{r}
+```{r failed addition}
+#| error: true
 2 + a
 ```
 
