@@ -52,7 +52,6 @@ ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
 `geom_density_ridges()` chose to use:
 
 ```{r mpg density ridges}
-#| warning: false
 ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_density_ridges() +
   labs(
@@ -89,7 +88,7 @@ ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
 output:
 
 ```{r addition}
-#| execute: false
+#| eval: false
 2 + 2
 ```
 
@@ -123,7 +122,15 @@ two levels: `petrol` (any car using petrolium-based gas) and
 `alternative energy` (any car not using petrolium-based gas). 
 
 ```{r}
-
+# https://stackoverflow.com/questions/25548656/ggplot2s-mpg-dataset-whats-the-fl-variable
+clean_mpg <- mpg |>
+  mutate(
+    fuel_type = if_else(
+      fl %in% c("r", "p", "d"), # regular, premium, diesel
+      "petrol",
+      "alternative energy" # ethanol, compressed natural gas
+    )
+  )
 ```
 
 12. The `drv` variable describes if the car has front drive (`f`), rear drive
@@ -132,7 +139,14 @@ Specifically, use the `case_when()` function to change the `drv` varible to have
 the following levels: `front`, `rear`, `four wheel`. 
 
 ```{r}
-
+clean_mpg <- clean_mpg |>
+  mutate(
+    drv = case_when(
+      drv == "f" ~ "front",
+      drv == "r" ~ "rear",
+      drv == "4" ~ "four wheel"
+    )
+  )
 ```
 
 (string split + remove extra ")" )
@@ -145,7 +159,10 @@ of the `trans` column to `trans_style`.
 *Hint: You will need to deal with the stray parenthesis!* 
 
 ```{r}
-
+# should probably use separate_wider_regex instead
+clean_mpg <- clean_mpg |>
+  separate_wider_delim(trans, "(", names = c("trans_style", "trans_type")) |>
+  mutate(trans_type = str_sub(trans_type, end = -2))
 ```
 
 ## Getting to know your classmates

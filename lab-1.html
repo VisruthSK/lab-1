@@ -2279,17 +2279,14 @@ vertical-align: -.125em;
 <ol start="8" type="1">
 <li>Using code chunk options, make it so this chunk shows the code but not the output:</li>
 </ol>
-<div class="cell" data-execute="false">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
 </div>
 <ol start="9" type="1">
 <li>Using code chunk options, make it so the file can still knit even though this chunk has an error</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object &#39;a&#39; not found</code></pre>
 </div>
@@ -2305,11 +2302,33 @@ vertical-align: -.125em;
 <ol start="11" type="1">
 <li>The <code>fl</code> variable describes the type of fuel for each car, with levels: <code>p</code>, <code>r</code>, <code>e</code>, <code>d</code>, and <code>c</code>. Do some research into what each of these labels mean! Then, use the <code>if_else()</code> function to create a new variable (<code>fuel_type</code>) with two levels: <code>petrol</code> (any car using petrolium-based gas) and <code>alternative energy</code> (any car not using petrolium-based gas).</li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>clean_mpg <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">fuel_type =</span> <span class="fu">if_else</span>(fl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;p&quot;</span>, <span class="st">&quot;d&quot;</span>), <span class="st">&quot;petrol&quot;</span>, <span class="st">&quot;alternative energy&quot;</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ol start="12" type="1">
 <li>The <code>drv</code> variable describes if the car has front drive (<code>f</code>), rear drive (<code>r</code>), or four wheel drive (<code>4</code>). Let’s make better labels for these values! Specifically, use the <code>case_when()</code> function to change the <code>drv</code> varible to have the following levels: <code>front</code>, <code>rear</code>, <code>four wheel</code>.</li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>clean_mpg <span class="ot">&lt;-</span> clean_mpg <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">drv =</span> <span class="fu">case_when</span>(</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      drv <span class="sc">==</span> <span class="st">&quot;f&quot;</span> <span class="sc">~</span> <span class="st">&quot;front&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      drv <span class="sc">==</span> <span class="st">&quot;r&quot;</span> <span class="sc">~</span> <span class="st">&quot;rear&quot;</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      drv <span class="sc">==</span> <span class="st">&quot;4&quot;</span> <span class="sc">~</span> <span class="st">&quot;four wheel&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>(string split + remove extra “)” ) 13. The <code>trans</code> variable contains two pieces of information, (1) the transmission style (<code>auto</code> or <code>manual</code>) and the specific type of transmission (e.g., <code>l5</code>, <code>m5</code>). Using the <code>str_split()</code> function, create a new variable (<code>trans_type</code>) containing the specific type of transmission of each car. Once you’ve made this new variable, use the <code>rename()</code> function to change the name of the <code>trans</code> column to <code>trans_style</code>.<br>
 <em>Hint: You will need to deal with the stray parenthesis!</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># should probably use separate_wider_regex instead</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>clean_mpg <span class="ot">&lt;-</span> clean_mpg <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_wider_delim</span>(trans, <span class="st">&quot;(&quot;</span>, <span class="at">names =</span> <span class="fu">c</span>(<span class="st">&quot;trans_style&quot;</span>, <span class="st">&quot;trans_type&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">trans_type =</span> <span class="fu">str_sub</span>(trans_type, <span class="at">end =</span> <span class="sc">-</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="getting-to-know-your-classmates" class="level2">
 <h2 class="anchored" data-anchor-id="getting-to-know-your-classmates">Getting to know your classmates</h2>
