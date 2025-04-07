@@ -150,6 +150,7 @@ clean_mpg <- clean_mpg |>
 ```
 
 (string split + remove extra ")" )
+
 13. The `trans` variable contains two pieces of information, (1) the
 transmission style (`auto` or `manual`) and the specific type of transmission
 (e.g., `l5`, `m5`). Using the `str_split()` function, create a new variable
@@ -172,6 +173,17 @@ your experiences. Tell me their name and professor. List one or two things that
 you think you learned more about, and one or two things that they learned more
 about.
 
+I spoke to Matt Babb who took STAT 331 with Dr. Robinson. He learned a lot more about Shiny, and did more outside of class. I don't remember learning any Shiny in 331. Matt did some cool work with Shiny and made a Life Wheel. I learned more about OOP and modelling through my own ventures. Matt said he enjoyed his experience and thought it was fun, albeit frustrating.
+
 15. Find someone in the class who **does not** share your birth month. Tell me
 their name and birthday, and use R to find out how many days apart your
 birthdays are.
+
+```{r}
+library(lubridate)
+
+interval(ymd("2005-08-26"), ymd("1992-12-21")) |>
+  as.duration() |>
+  as.numeric("days") |>
+  abs()
+```
