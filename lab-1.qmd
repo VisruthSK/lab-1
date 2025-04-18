@@ -11,7 +11,6 @@ warning: false
 
 ```{r}
 #| label: packages-setup
-
 library(tidyverse)
 library(ggridges)
 ```
@@ -37,7 +36,8 @@ HTML file
 5.  Using code chunk options, make it so this chunk shows the plot but not the
 source code:
 
-```{r mpg boxplots}
+```{r}
+#| label: mpg-boxplots
 #| echo: false
 ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_boxplot() +
@@ -51,7 +51,8 @@ ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
 6.  Using code chunk options, remove the messages about bandwidth
 `geom_density_ridges()` chose to use:
 
-```{r mpg density ridges}
+```{r}
+#| label: mpg-density-ridges
 ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_density_ridges() +
   labs(
@@ -64,7 +65,8 @@ ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
 7.  Using code chunk options, make it so that these plots are printed
 side-by-side:
 
-```{r side by side plots}
+```{r}
+#| label: side-by-side-plots
 #| layout-ncol: 2
 ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
   geom_boxplot() +
@@ -87,7 +89,8 @@ ggplot(data = mpg, mapping = aes(y = manufacturer, x = hwy)) +
 8.  Using code chunk options, make it so this chunk shows the code but not the
 output:
 
-```{r addition}
+```{r}
+#| label: addition
 #| eval: false
 2 + 2
 ```
@@ -95,7 +98,8 @@ output:
 9.  Using code chunk options, make it so the file can still knit even though
 this chunk has an error
 
-```{r failed addition}
+```{r}
+#| label: failed-addition
 #| error: true
 2 + a
 ```
@@ -160,10 +164,11 @@ of the `trans` column to `trans_style`.
 *Hint: You will need to deal with the stray parenthesis!* 
 
 ```{r}
-# should probably use separate_wider_regex instead
 clean_mpg <- clean_mpg |>
-  separate_wider_delim(trans, "(", names = c("trans_style", "trans_type")) |>
-  mutate(trans_type = str_sub(trans_type, end = -2))
+  separate_wider_regex(
+    trans,
+    patterns = c(trans_style = "[^()]+", "\\(", trans_type = "[^)]+", "\\)")
+  )
 ```
 
 ## Getting to know your classmates
